@@ -1,3 +1,11 @@
+var fish;
+var cat;
+
+function preload() {
+  fish = loadSound('fish.mp3');
+  cat = loadSound('cat.mp3');
+}
+
 var freqA = 100;
 var freqS = 200;
 var freqD = 300;
@@ -14,8 +22,8 @@ var playingF = false;
 var playingG = false;
 
 function setup() {
+  background(255, 204, 100);
   createCanvas (500, 500);
-  backgroundColor = color(255, 0, 255);
   textAlign(CENTER);
   
   oscA = new p5.Oscillator();
@@ -62,30 +70,33 @@ function keyPressed() {
   print("got key press for ", key);
   var osc;
   if (key == 'A') {
-    osc = oscA;
+    fish.setVolume(1);
+    fish.play();
     playingA = true;
   } else if (key == 'S') {
-    osc = oscS;
+    fish.setVolume(1);
+    fish.play();
     playingS = true;
   } else if (key == 'D') {
-    osc = oscD;
+    fish.setVolume(1);
+    fish.play();
     playingD = true;
   } else if (key == 'F') {
-    osc = oscF;
+    fish.setVolume(1);
+    fish.play();
     playingF = true;
   } else if (key == 'G') {
-    osc = oscG;
+    cat.setVolume(1);
+    cat.play();
     playingG = true;
-  }
-  if (osc) {
-    osc.amp(0.5, 0.1);
   }
 }
 
 function draw() {
-  background(255);
+  background(color(20, 200, 255));
   fill(100,0,50);
   if (playingA) {
+    background(color(20,200,(100,250)));
 		fill(0,150,250);
     noStroke();
     ellipse(300, 150, 80, 30);
@@ -95,8 +106,8 @@ function draw() {
     
   }
   if (playingS) {
-     fill(0,100,200);
-     noStroke();
+    fill(0,100,200);
+    noStroke();
      ellipse(200, 50, 80, 30);
 		triangle(200, 50, 250, 30, 250, 70);
 		fill(255);
