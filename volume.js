@@ -1,3 +1,6 @@
+
+
+
 var freqA = 174;
 var freqS = 196;
 var freqD = 220;
@@ -5,12 +8,12 @@ var freqF = 246;
 
 var oscA, oscS, oscD, oscF;
 
-var playingA = false;
-var playingS = false;
-var playingD = false;
-var playingF = false;
+var playingA, playingS, playingD, playingF;
+
+var playing = false;
 
 function setup() {
+  createCanvas(400, 400);
   backgroundColor = color(255, 0, 255);
   textAlign(CENTER);
   
@@ -40,38 +43,32 @@ function setup() {
 }
 
 function draw() {
-  if (playingA, playingS, playingD, playingF) {
-    background(0, 255, 255);
-  } else {
-    background(255, 0, 255);
-  }
-  text('click here,\nthen press A/S/D/F\n keys to play', width / 2, 40);
-}
 
-function keyPressed() {
-  print("got key press for ", key);
-  var osc;
-  if (key == 'A') {
-    osc = oscA;
-    playingA = true;
-  } else if (key == 'S') {
-    osc = oscS;
-    playingS = true;
-  } else if (key == 'D') {
-    osc = oscD;
-    playingD = true;
-  } else if (key == 'F') {
-    osc = oscF;
-    playingF = true;
+	background(255, 0, 255);
+  
+  var volume = map(mouseX, 0, mouseY, 0, 1);
+  volume = constrain(volume, 0, 1);
+  
+  if (playingA)	{
+  osc=oscA;
+  osc.amp(volume);
   }
-  if (osc) {
-    osc.amp(0.5, 0.1);
+  
+  if (playingS)	{
+  osc=oscS;
+  osc.amp(volume);
   }
-
-}
-  function draw() {
-  background(255);
-  noStroke(); 
+  
+  if (playingD)	{
+  osc=oscD;
+  osc.amp(volume);
+  }
+  
+  if (playingF)	{
+  osc=oscF;
+  osc.amp(volume);
+  }
+  
   if (playingA) {
     fill("red");
     rect(50,50,50,50);
@@ -90,43 +87,58 @@ function keyPressed() {
   }
 }
 
-    
-function mousePressed() {
-  print("mouse is pressed");
-	if (mouseIsPressed && key == 'A') {
-    freqA = freqA + 100
-    oscA.freq(freqA);
-} if (mouseIsPressed && key == 'S') {
-   freqS = freqS + 100
-    oscS.freq(freqS);
-} if (mouseIsPressed && key == 'D') {
-   freqD = freqD + 100
-    oscD.freq(freqD);
-} if (mouseIsPressed && key == 'F') {
-   freqF = freqF + 100
-    oscF.freq(freqF);
-  
+function mousePressed(){
+	freqA++;
+  oscA.freq(freqA);
+  freqS++;
+  oscS.freq(freqS);
+  freqD++;
+  oscD.freq(freqD);
+  freqF++;
+  oscF.freq(freqF);
 }
-} 
-    
+
+
+function keyPressed() {
+  print("got key press for ", key);
+  var osc;
+  if (key == 'A') {
+    osc = oscA;
+    playingA = true;
+  } else if (key == 'S') {
+    osc = oscS;
+    playingS = true;
+  } else if (key == 'D') {
+    osc = oscD;
+    playingD = true;
+  } else if (key == 'F') {
+    osc = oscF;
+    playingF = true;
+  }
+  if (osc) {
+    osc.amp(0.5,0.1);
+    playing = true;
+  }
+}
 
 function keyReleased() {
   print("got key release for ", key);
   var osc;
   if (key == 'A') {
     osc = oscA;
+    playingA = false;
   } else if (key == 'S') {
     osc = oscS;
+    playingS = false;
   } else if (key == 'D') {
     osc = oscD;
+    playingD = false;
   } else if (key == 'F') {
     osc = oscF;
+    playingF = false;
   }
   if (osc) {
     osc.amp(0, 0.5);
-    playingA = false;
-		playingS = false;
-		playingD = false;
-		playingF = false;
+    playingA = false, playingS = false, playingD = false, playingF = false;
   }
 }
