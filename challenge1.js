@@ -5,7 +5,10 @@ var freqF = 246;
 
 var oscA, oscS, oscD, oscF;
 
-var playing = false;
+var playingA = false;
+var playingS = false;
+var playingD = false;
+var playingF = false;
 
 function setup() {
   backgroundColor = color(255, 0, 255);
@@ -37,7 +40,7 @@ function setup() {
 }
 
 function draw() {
-  if (playing) {
+  if (playingA, playingS, playingD, playingF) {
     background(0, 255, 255);
   } else {
     background(255, 0, 255);
@@ -50,18 +53,62 @@ function keyPressed() {
   var osc;
   if (key == 'A') {
     osc = oscA;
+    playingA = true;
   } else if (key == 'S') {
     osc = oscS;
+    playingS = true;
   } else if (key == 'D') {
     osc = oscD;
+    playingD = true;
   } else if (key == 'F') {
     osc = oscF;
+    playingF = true;
   }
   if (osc) {
     osc.amp(0.5, 0.1);
-    playing = true;
+  }
+
+}
+  function draw() {
+  background(255);
+  noStroke(); 
+  if (playingA) {
+    fill("red");
+    rect(50,50,50,50);
+  }
+  if (playingS) {
+    fill("yellow");
+    ellipse(50,50,50,50);
+  }
+    if (playingD) {
+    fill("blue");
+    rect(50,50,50,50);
+  }
+  if (playingF) {
+  fill("green");
+  ellipse(50,50,50,50);
   }
 }
+
+    
+function mousePressed() {
+  print("mouse is pressed");
+	if (mouseIsPressed && key == 'A') {
+    freqA = freqA + 100
+    oscA.freq(freqA);
+} if (mouseIsPressed && key == 'S') {
+   freqS = freqS + 100
+    oscS.freq(freqS);
+} if (mouseIsPressed && key == 'D') {
+   freqD = freqD + 100
+    oscD.freq(freqD);
+} if (mouseIsPressed && key == 'F') {
+   freqF = freqF + 100
+    oscF.freq(freqF);
+  
+}
+} 
+    
 
 function keyReleased() {
   print("got key release for ", key);
@@ -77,6 +124,9 @@ function keyReleased() {
   }
   if (osc) {
     osc.amp(0, 0.5);
-    playing = false;
+    playingA = false;
+		playingS = false;
+		playingD = false;
+		playingF = false;
   }
 }
